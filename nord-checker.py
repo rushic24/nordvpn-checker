@@ -3,6 +3,7 @@ import subprocess
 import sys
 import argparse
 from typing import Union
+from subprocess import PIPE
 
 # console colors
 G = '\033[92m'  # Green
@@ -41,31 +42,28 @@ def read_arguments():
 
 def check_login(email: str, password: str) -> Union['False', None, str]:
     # make sure you're logged out of NordVPN
-    subprocess.run(['nordvpn', 'logout'], capture_output=True)
+    subprocess.run(['nordvpn', 'logout'], stdout=PIPE, stderr=PIPE)
 
     login_result = subprocess.run(
         ['nordvpn', 'login', '-u', email, '-p', password],
-        capture_output=True,
-        text=True
-    )
+        stdout=PIPE, stderr=PIPE)
     if not login_result.returncode == 0:
         # Failed to login
-        return False
+        return  
     else:
         # Ensure the user is logged in
         account_info = subprocess.run(
             ['nordvpn', 'account'],
-            capture_output=True,
-            text=True
+            stdout=PIPE, stderr=PIPE
         )
-        if 'You are not logged in.' in account_info.stdout:
+        if b'You are not logged in.' in account_info.stdout:
             return None
         else:
             return account_info.stdout
 
 
 def parse_expiration_date(login_result: str) -> str:
-    return login_result.split('VPN Service: ')[
+    return login_result.decode('ascii').split('VPN Service: ')[
         1].rstrip()
 
 
