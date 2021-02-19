@@ -16,6 +16,8 @@ A simple Python script to check if NordVPN accounts listed in a file are valid.
 
 # Usage
 
+## https://www.text-filter.com/tools/remove-everything-after-space/
+
 - The syntax is
   > `nord-checker.py [--file | -f] path/to/file [--output | -o] path/to/file`
 
