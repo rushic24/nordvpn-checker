@@ -20,7 +20,7 @@ A simple Python script to check if NordVPN accounts listed in a file are valid.
 
 ##or
 
-## this regex ```sed -i -E 's/\|.+//g' 17K\ NORD\ VPN\ Accounts.txt```
+## this regex ```sed -i -E 's/\|.+//g' filename.txt```
 
 - The syntax is
   > `nord-checker.py [--file | -f] path/to/file [--output | -o] path/to/file`
